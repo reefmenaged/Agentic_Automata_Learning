@@ -2091,7 +2091,13 @@ function introHtml(){
 }
 function showIntroInChat(){
   const chat=document.getElementById('chat');
-  if(chat){ chat.innerHTML=introHtml(); chat.classList.remove('hidden'); chat.classList.add('intro-mode'); introVisible = true; renderedEventKeys = []; }
+  if(chat){
+    chat.innerHTML='';
+    chat.classList.remove('hidden');
+    chat.classList.remove('intro-mode');
+    introVisible = false;
+    renderedEventKeys = [];
+  }
 }
 function isFlashLiteSelected(){
   const provider=document.getElementById('api_provider') ? document.getElementById('api_provider').value : '';
