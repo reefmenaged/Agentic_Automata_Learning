@@ -1,18 +1,10 @@
 # Agentic Automata Learning
 
-[![arXiv](https://img.shields.io/badge/arXiv-paper-b31b1b.svg)]()
-[![Website](https://img.shields.io/badge/website-blue.svg)](https://agentic-automata-learning.onrender.com)
+[![Website](https://img.shields.io/badge/Website-Agentic%20Automata%20Learning-blue)](https://reefmenaged.github.io/Agentic_Automata_Learning)
+
 
 Agentic Automata Learning is an evaluation framework for studying Large Language Model (LLM) agents. The framework investigates whether agents can infer a hidden structure of an environment through interaction, information gathering, and iterative hypothesis refinement.
 
-## Components
-
-- 📄 **Research Paper** - Introduces the Agentic Automata Learning framework and presents experimental results on modern LLM agents.
-- 💻 **Source Code** - Complete implementation of the evaluation framework, experiment runner, task generation tools, and analysis utilities.
-- 🌐 **[Web Interface](https://agentic-automata-learning.onrender.com)** - Agentic Automata Learning Runner, an interactive interface for launching experiments, monitoring agent interactions, and visualizing learning trajectories. Users can explore and run experiments directly in the browser for free, with no installation or API key required.
-<p align="center">
-  <img src="app/images/img1.gif" height="300" alt="Agentic Automata Learning Runner Demo">
-</p>
 
 ## Source Code
 
@@ -26,10 +18,8 @@ Agentic Automata Learning is an evaluation framework for studying Large Language
 
 #### 1. Clone the Repository
 
-Replace `USER` with the GitHub username that owns the repository. For example, if the repository is hosted under `john`, the URL would be:
-
 ```bash
-git clone https://github.com/john/Agentic_Automata_Learning.git
+git clone https://github.com/reefmenaged/Agentic_Automata_Learning.git
 ```
 
 Then enter the project directory:
