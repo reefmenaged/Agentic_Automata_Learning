@@ -2061,7 +2061,7 @@ let lastRenderedEventsKey = "";
 let renderLocked = false;
 let lockedFrameSrcByCall = {};
 let renderedEventKeys = [];
-let introVisible = true;
+let introVisible = false;
 
 function escapeHtml(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function introHtml(){
@@ -2631,7 +2631,7 @@ function showAnalysis(){
   refreshEvents();
 }
 setInterval(refreshEvents,800);
-window.onload=()=>{updateModels();updateApiKeyVisibility();updateTargetSource();showIntroInChat();refreshEvents();};
+window.onload=()=>{updateModels();updateApiKeyVisibility();updateTargetSource();refreshEvents();};
 </script>
 </head>
 <body>
@@ -2696,9 +2696,7 @@ window.onload=()=>{updateModels();updateApiKeyVisibility();updateTargetSource();
     </div>
   </div>
   <div id="output-card" class="card output-card">
-    <div id="chat" class="chat-wrap intro-mode">
-      <script>document.write(introHtml())</script>
-    </div>
+    <div id="chat" class="chat-wrap"></div>
     <div id="token-usage-footer" class="token-usage-footer hidden"></div>
     <iframe id="full-analysis" class="full-frame hidden" onload="zoomAnalysisIframe(this)"></iframe>
     <div id="save-note" class="save-note hidden"></div>
