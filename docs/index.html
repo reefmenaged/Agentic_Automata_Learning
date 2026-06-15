@@ -219,6 +219,33 @@
   .edge-label.lit{fill:var(--accent);font-weight:700}
   .token{fill:var(--accent);opacity:0}
 
+
+  /* ---------- try it yourself pane ---------- */
+  .try-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:860px){.try-body{grid-template-columns:1fr}}
+  .try-card{padding:20px;border-top:1px solid var(--line-soft)}
+  .try-card + .try-card{border-left:1px solid var(--line-soft);background:var(--card-2)}
+  @media(max-width:860px){.try-card + .try-card{border-left:none;border-top:1px solid var(--line-soft)}}
+  .try-card h3{margin-bottom:10px}
+  .field-row{display:flex;gap:8px;align-items:center;margin:10px 0 12px}
+  .field-row input{flex:1;min-width:0;font-family:var(--mono);font-size:.9rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px 11px}
+  .field-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,69,226,.12)}
+  .mini-btn{font-family:var(--mono);font-size:.78rem;font-weight:500;color:#fff;background:var(--accent);border:1px solid var(--accent);border-radius:9px;padding:10px 12px;cursor:pointer;white-space:nowrap}
+  .mini-btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+  .mini-btn.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+  .mini-btn.ghost:hover{color:var(--ink);border-color:var(--ink)}
+  .try-log{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-top:10px}
+  .try-log table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.8rem}
+  .try-log th,.try-log td{padding:7px 9px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:top}
+  .try-log th{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--card-2);font-weight:500}
+  .try-log tr:last-child td{border-bottom:none}
+  .badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.72rem;border-radius:999px;padding:2px 8px}
+  .badge.ok{color:var(--accept);background:rgba(21,144,90,.09)}
+  .badge.no{color:var(--reject);background:rgba(214,67,58,.09)}
+  .ce-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;max-height:154px;overflow:auto}
+  .ce-item{font-family:var(--mono);font-size:.8rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+  .empty-note{font-size:.82rem;color:var(--muted);font-style:italic}
+
   /* ---------- sections ---------- */
   section{padding:54px 0}
   .sec-eyebrow{
@@ -435,12 +462,11 @@
   <div class="wrap-wide">
     <div class="figure reveal">
       <div class="sec-eyebrow" style="max-width:var(--maxw);margin:0 auto 14px">The setup</div>
-      <h2 style="max-width:var(--maxw);margin:0 auto 22px">Discover a hidden DFA through two kinds of questions</h2>
+      <h2 style="max-width:var(--maxw);margin:0 auto 22px">Try it yourself! Can you discover a hidden DFA through two kinds of questions?</h2>
       <div class="machine" id="machine">
         <div class="tabs" role="tablist" aria-label="Automata explorer">
           <button class="tab active" role="tab" aria-selected="true" data-pane="pane-diagram">Diagram</button>
-          <button class="tab" role="tab" aria-selected="false" data-pane="pane-mq">Membership Query</button>
-          <button class="tab" role="tab" aria-selected="false" data-pane="pane-eq">Equivalence Query</button>
+          <button class="tab" role="tab" aria-selected="false" data-pane="pane-try">Try it yourself</button>
         </div>
         <!-- PANE · diagram (Figure 1) -->
         <div class="pane active" id="pane-diagram" role="tabpanel">
@@ -452,102 +478,45 @@
             <span class="desc"><b>Agentic automata learning.</b> An agent identifies a hidden DFA through repeated interaction. Membership queries ask whether a word is accepted (left). Equivalence queries submit a candidate DFA and ask whether it matches the target; the environment confirms equivalence or returns a counterexample where the two disagree (right).</span>
           </div>
         </div>
-      <!-- PANE 2 · membership query -->
-      <div class="pane" id="pane-mq" role="tabpanel">
+      <!-- PANE 2 · try it yourself -->
+      <div class="pane" id="pane-try" role="tabpanel">
         <div class="machine-head">
-          <span class="tag">Membership Query</span>
-          <span class="desc">A hidden DFA accepting words that contain at least one <code>b</code>. Probe it - does a word belong to the language?</span>
+          <span class="tag">Interactive challenge</span>
+          <span class="desc">The hidden language is over <code>{a,b}</code>. Ask membership queries, then submit a regular expression as an equivalence query.</span>
         </div>
-        <div class="machine-body">
-          <div class="stage">
-            <svg id="dfa" viewBox="0 0 460 230" width="100%" style="max-width:440px">
-              <path d="M28 120 H78" class="edge" marker-end="url(#arr)"/>
-              <text x="20" y="106" class="edge-label" text-anchor="middle">start</text>
-              <path id="e_q0a" class="edge" d="M104 84 C96 44, 156 44, 148 84" marker-end="url(#arr)"/>
-              <text x="126" y="40" class="edge-label" id="l_q0a" text-anchor="middle">a</text>
-              <path id="e_q0b" class="edge" d="M168 120 H292" marker-end="url(#arr)"/>
-              <text x="230" y="110" class="edge-label" id="l_q0b" text-anchor="middle">b</text>
-              <path id="e_q1ab" class="edge" d="M312 84 C304 44, 364 44, 356 84" marker-end="url(#arr)"/>
-              <text x="334" y="40" class="edge-label" id="l_q1ab" text-anchor="middle">a, b</text>
-              <circle id="q0" class="st-ring" cx="126" cy="120" r="42"/>
-              <text x="126" y="125" class="st-label" id="q0t" text-anchor="middle">q0</text>
-              <circle id="q1" class="st-ring" cx="334" cy="120" r="42"/>
-              <circle id="q1inner" cx="334" cy="120" r="35" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
-              <text x="334" y="125" class="st-label" id="q1t" text-anchor="middle">q1</text>
-              <circle id="token" class="token" r="7"/>
-            </svg>
-          </div>
-          <div class="panel">
-            <div>
-              <div class="plabel">Word over Σ = {a, b}</div>
-              <div class="word-display" id="word"><span class="eps">ε</span></div>
+        <div class="try-body">
+          <div class="try-card">
+            <h3>Ask membership queries</h3>
+            <p class="hint">Type a word over <code>a</code> and <code>b</code>. The empty word is written as <code>ε</code>.</p>
+            <div class="field-row">
+              <input id="tryMqInput" type="text" placeholder="for example: ab, aab, ba, ε" autocomplete="off">
+              <button class="mini-btn" id="tryMqBtn" type="button">Ask MQ</button>
+              <button class="mini-btn ghost" id="tryResetBtn" type="button">Reset</button>
             </div>
-            <div class="keys">
-              <div class="key" data-sym="a">a</div>
-              <div class="key" data-sym="b">b</div>
-              <div class="key util" id="back">⌫ del</div>
-              <div class="key util" id="clear">clear</div>
-              <div class="key run" id="run">▶ query</div>
+            <div class="verdict" id="tryMqVerdict">Ask a membership query to start collecting examples.</div>
+            <div class="try-log">
+              <table aria-label="Membership query history">
+                <thead><tr><th>#</th><th>word</th><th>answer</th></tr></thead>
+                <tbody id="tryMqRows"><tr><td colspan="3" class="empty-note">No membership queries yet.</td></tr></tbody>
+              </table>
             </div>
-            <div class="verdict" id="verdict">Build a word, then run a membership query.</div>
-            <div class="hint">The agent only sees accept / reject answers, never the DFA. Its job is to reconstruct the whole diagram from probes like these.</div>
           </div>
-        </div>
-      </div>
-      <!-- PANE 3 · equivalence query -->
-      <div class="pane" id="pane-eq" role="tabpanel">
-        <div class="machine-head">
-          <span class="tag">Equivalence Query</span>
-          <span class="desc">Submit a candidate DFA. The oracle confirms it, or returns a counterexample, a word on which the candidate and the hidden DFA disagree.</span>
-        </div>
-        <div class="machine-body">
-          <div class="stage">
-            <!-- candidate: empty language -->
-            <svg class="cand active" id="cand-empty" viewBox="0 0 460 230" width="100%" style="max-width:360px">
-              <path d="M118 120 H180" class="edge" marker-end="url(#arr)"/>
-              <text x="110" y="106" class="edge-label" text-anchor="middle">start</text>
-              <path class="edge" d="M208 84 C200 42, 260 42, 252 84" marker-end="url(#arr)"/>
-              <text x="230" y="38" class="edge-label" text-anchor="middle">a, b</text>
-              <circle cx="230" cy="120" r="42" class="st-ring"/>
-              <text x="230" y="125" class="st-label" text-anchor="middle">q0</text>
-            </svg>
-            <!-- candidate: Sigma* -->
-            <svg class="cand" id="cand-sigma" viewBox="0 0 460 230" width="100%" style="max-width:360px">
-              <path d="M118 120 H180" class="edge" marker-end="url(#arr)"/>
-              <text x="110" y="106" class="edge-label" text-anchor="middle">start</text>
-              <path class="edge" d="M208 84 C200 42, 260 42, 252 84" marker-end="url(#arr)"/>
-              <text x="230" y="38" class="edge-label" text-anchor="middle">a, b</text>
-              <circle cx="230" cy="120" r="42" class="st-ring"/>
-              <circle cx="230" cy="120" r="35" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
-              <text x="230" y="125" class="st-label" text-anchor="middle">q0</text>
-            </svg>
-            <!-- candidate: contains a b (target) -->
-            <svg class="cand" id="cand-target" viewBox="0 0 460 230" width="100%" style="max-width:440px">
-              <path d="M28 120 H78" class="edge" marker-end="url(#arr)"/>
-              <text x="20" y="106" class="edge-label" text-anchor="middle">start</text>
-              <path class="edge" d="M104 84 C96 44, 156 44, 148 84" marker-end="url(#arr)"/>
-              <text x="126" y="40" class="edge-label" text-anchor="middle">a</text>
-              <path class="edge" d="M168 120 H292" marker-end="url(#arr)"/>
-              <text x="230" y="110" class="edge-label" text-anchor="middle">b</text>
-              <path class="edge" d="M312 84 C304 44, 364 44, 356 84" marker-end="url(#arr)"/>
-              <text x="334" y="40" class="edge-label" text-anchor="middle">a, b</text>
-              <circle cx="126" cy="120" r="42" class="st-ring"/>
-              <text x="126" y="125" class="st-label" text-anchor="middle">q0</text>
-              <circle cx="334" cy="120" r="42" class="st-ring"/>
-              <circle cx="334" cy="120" r="35" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
-              <text x="334" y="125" class="st-label" text-anchor="middle">q1</text>
-            </svg>
-          </div>
-          <div class="panel">
-            <div class="plabel">Choose a hypothesis to submit</div>
-            <div class="cand-opts">
-              <button class="cand-opt active" data-cand="empty">∅ &nbsp;·&nbsp; rejects every word</button>
-              <button class="cand-opt" data-cand="sigma">Σ* &nbsp;·&nbsp; accepts every word</button>
-              <button class="cand-opt" data-cand="target">contains a b &nbsp;·&nbsp; the target</button>
+          <div class="try-card">
+            <h3>Submit a regular expression</h3>
+            <p class="hint">Use <code>a</code>, <code>b</code>, parentheses, union <code>|</code>, Kleene star <code>*</code>, and plus <code>+</code>. Your regex is converted to a DFA, minimized, and compared with the hidden DFA.</p>
+            <div class="field-row">
+              <input id="tryEqInput" type="text" placeholder="for example: a(a|b)*b" autocomplete="off">
+              <button class="mini-btn" id="tryEqBtn" type="button">Submit EQ</button>
             </div>
-            <div class="key run" id="eqrun" style="width:auto;text-align:center">▶ submit equivalence query</div>
-            <div class="verdict" id="eqverdict">Pick a hypothesis, then submit it to the oracle.</div>
-            <div class="hint">As in Table 1, the oracle answers ⊤ only when the candidate is equivalent to the hidden DFA.</div>
+            <div class="verdict" id="tryEqVerdict">Submit a hypothesis when you think you know the language.</div>
+            <div style="margin-top:16px">
+              <button class="mini-btn ghost" id="tryRevealBtn" type="button">Reveal the solution</button>
+              <div class="verdict" id="trySolution" style="display:none;margin-top:10px"><span class="ic">→</span> Hidden regex: <code>a(a|b)*b</code></div>
+            </div>
+            <div style="margin-top:16px">
+              <div class="plabel">Proposed hypotheses</div>
+              <div class="ce-list" id="tryCeList"><div class="empty-note">No counterexamples yet.</div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -786,205 +755,247 @@
     navigator.clipboard.writeText(t).then(function(){ cb.textContent='Copied!'; setTimeout(function(){cb.textContent='Copy';},1600); });
   });}
 
-  /* ---- interactive DFA ---- */
-  // transition function: contains at least one 'b'
-  // q0 (reject, start): a->q0, b->q1 ; q1 (accept): a->q1, b->q1
-  var word = [];
-  var disp = document.getElementById('word');
-  var verdict = document.getElementById('verdict');
-  var q0 = document.getElementById('q0'), q1 = document.getElementById('q1');
-  var q0t = document.getElementById('q0t'), q1t = document.getElementById('q1t');
-  var token = document.getElementById('token');
-  var edges = {
-    q0a: {p:document.getElementById('e_q0a'), l:document.getElementById('l_q0a')},
-    q0b: {p:document.getElementById('e_q0b'), l:document.getElementById('l_q0b')},
-    q1ab:{p:document.getElementById('e_q1ab'), l:document.getElementById('l_q1ab')}
-  };
-  var running = false;
-  var pos = {q0:{x:126,y:120}, q1:{x:334,y:120}};
-
-  function renderWord(curIdx){
-    if(word.length===0){ disp.innerHTML = '<span class="eps">ε</span>'; return; }
-    disp.innerHTML = word.map(function(s,i){
-      return (i===curIdx) ? '<span class="cur">'+s+'</span>' : s;
-    }).join('');
-  }
-  function clearViz(){
-    [q0,q1].forEach(function(c){ c.classList.remove('active','accept-on','reject-on'); });
-    q0t.classList.remove('on'); q1t.classList.remove('on');
-    Object.keys(edges).forEach(function(k){ edges[k].p.classList.remove('lit'); edges[k].p.setAttribute('marker-end','url(#arr)'); edges[k].l.classList.remove('lit'); });
-    token.style.opacity = 0;
-  }
-  function litState(which){
-    clearViz();
-    var c = which==='q0'?q0:q1, t = which==='q0'?q0t:q1t;
-    c.classList.add('active'); t.classList.add('on');
-  }
-  function litEdge(key){
-    edges[key].p.classList.add('lit'); edges[key].p.setAttribute('marker-end','url(#arrlit)'); edges[key].l.classList.add('lit');
-  }
-
-  function setVerdict(state){
-    if(state==='q1'){ verdict.className='verdict accept'; verdict.innerHTML='<span class="ic">✓</span> accepted - in the language'; }
-    else { verdict.className='verdict reject'; verdict.innerHTML='<span class="ic">✗</span> rejected - not in the language'; }
-  }
-
-  function finalGlow(state){
-    clearViz();
-    if(state==='q1'){ q1.classList.add('accept-on'); q1t.classList.add('on'); }
-    else { q0.classList.add('reject-on'); }
-  }
-
-  function run(){
-    if(running) return;
-    running = true;
-    clearViz();
-    verdict.className='verdict'; verdict.textContent='running query…';
-    var state = 'q0';
-    litState('q0'); renderWord(-1);
-    if(word.length===0){
-      // epsilon: end immediately at q0 (reject)
-      setTimeout(function(){ finalGlow('q0'); setVerdict('q0'); running=false; }, reduce?0:520);
-      return;
-    }
-    var step = 0;
-    function doStep(){
-      if(step >= word.length){
-        finalGlow(state); setVerdict(state); running=false; return;
-      }
-      var sym = word[step];
-      var from = state;
-      var key, next;
-      if(from==='q0'){ if(sym==='a'){key='q0a'; next='q0';} else {key='q0b'; next='q1';} }
-      else { key='q1ab'; next='q1'; }
-      renderWord(step);
-      litState(from); litEdge(key);
-      // animate token from->next
-      var a = pos[from], b = pos[next];
-      if(reduce){
-        state = next; step++;
-        if(step>=word.length){ finalGlow(state); setVerdict(state); running=false; }
-        else doStep();
-        return;
-      }
-      token.style.opacity = 1;
-      var dur = 460, t0 = null;
-      // for self loops, arc up and back
-      function frame(ts){
-        if(!t0) t0 = ts;
-        var p = Math.min(1,(ts-t0)/dur);
-        var ease = p<.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;
-        var x,y;
-        if(from===next){ // self loop arc
-          var cx = a.x, top = a.y-78;
-          var pp = ease;
-          x = a.x + Math.sin(pp*Math.PI)* (from==='q0'?22:22);
-          y = a.y - 42 - Math.sin(pp*Math.PI)*36;
-        } else {
-          x = a.x + (b.x-a.x)*ease;
-          y = a.y + (b.y-a.y)*ease;
-        }
-        token.setAttribute('cx',x); token.setAttribute('cy',y);
-        if(p<1){ requestAnimationFrame(frame); }
-        else {
-          token.style.opacity = 0;
-          state = next; step++;
-          litState(state);
-          setTimeout(doStep, 180);
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-    setTimeout(doStep, reduce?0:380);
-  }
-
-  document.querySelectorAll('.key[data-sym]').forEach(function(k){
-    k.addEventListener('click', function(){
-      if(running) return;
-      if(word.length>=14) return;
-      word.push(k.getAttribute('data-sym'));
-      renderWord(-1); clearViz();
-      verdict.className='verdict'; verdict.textContent='ready - run the query';
-    });
-  });
-  document.getElementById('back').addEventListener('click', function(){
-    if(running) return; word.pop(); renderWord(-1); clearViz();
-    verdict.className='verdict'; verdict.textContent = word.length? 'ready - run the query':'Build a word, then run a membership query.';
-  });
-  document.getElementById('clear').addEventListener('click', function(){
-    if(running) return; word=[]; renderWord(-1); clearViz();
-    verdict.className='verdict'; verdict.textContent='Build a word, then run a membership query.';
-  });
-  document.getElementById('run').addEventListener('click', run);
-  // keyboard (only while Membership Query pane is visible)
-  document.addEventListener('keydown', function(e){
-    if(running) return;
-    if(!document.getElementById('pane-mq').classList.contains('active')) return;
-    var tag = (e.target.tagName||'').toLowerCase();
-    if(tag==='input'||tag==='textarea') return;
-    if(e.key==='a'||e.key==='b'){ if(word.length<14){word.push(e.key); renderWord(-1); clearViz(); verdict.className='verdict'; verdict.textContent='ready - run the query';} }
-    else if(e.key==='Backspace'){ word.pop(); renderWord(-1); clearViz(); }
-    else if(e.key==='Enter'){ run(); }
-  });
-
-  /* ---- tabs + equivalence query ---- */
+  /* ---- tabs + try-it-yourself hidden DFA challenge ---- */
   var tabs = document.querySelectorAll('.machine .tab');
   var panes = {
     'pane-diagram': document.getElementById('pane-diagram'),
-    'pane-mq':      document.getElementById('pane-mq'),
-    'pane-eq':      document.getElementById('pane-eq')
+    'pane-try': document.getElementById('pane-try')
   };
-  var vid = document.getElementById('demoVid');
-  var mqDemoShown = false;
-
-  function autoDemo(){
-    if(reduce) return;
-    word = ['a','a','b'];
-    renderWord(-1);
-    setTimeout(run, 500);
-  }
-
-  function activate(target){
-    tabs.forEach(function(t){
-      var on = t.getAttribute('data-pane')===target;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on?'true':'false');
-    });
-    Object.keys(panes).forEach(function(k){ panes[k].classList.toggle('active', k===target); });
-    // run the membership walkthrough the first time that tab opens
-    if(target==='pane-mq' && !mqDemoShown){ mqDemoShown=true; autoDemo(); }
-  }
-  tabs.forEach(function(t){ t.addEventListener('click', function(){ activate(t.getAttribute('data-pane')); }); });
-
-  // equivalence query
-  var EQ = {
-    empty:  {svg:'cand-empty',  type:'ce', word:'bba', why:'accepted by the target, rejected by your DFA'},
-    sigma:  {svg:'cand-sigma',  type:'ce', word:'aaa', why:'rejected by the target, accepted by your DFA'},
-    target: {svg:'cand-target', type:'ok'}
-  };
-  var eqSel = 'empty';
-  var eqVerdict = document.getElementById('eqverdict');
-  function showCand(key){
-    document.querySelectorAll('.cand').forEach(function(s){ s.classList.toggle('active', s.id===EQ[key].svg); });
-  }
-  document.querySelectorAll('.cand-opt').forEach(function(b){
-    b.addEventListener('click', function(){
-      eqSel = b.getAttribute('data-cand');
-      document.querySelectorAll('.cand-opt').forEach(function(x){ x.classList.toggle('active', x===b); });
-      showCand(eqSel);
-      eqVerdict.className='verdict'; eqVerdict.textContent='Submit this hypothesis to the oracle.';
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      var target = t.getAttribute('data-pane');
+      tabs.forEach(function(x){
+        var on = x.getAttribute('data-pane') === target;
+        x.classList.toggle('active', on);
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      Object.keys(panes).forEach(function(k){ panes[k].classList.toggle('active', k === target); });
     });
   });
-  document.getElementById('eqrun').addEventListener('click', function(){
-    var c = EQ[eqSel];
-    if(c.type==='ok'){
-      eqVerdict.className='verdict accept';
-      eqVerdict.innerHTML='<span class="ic">✓</span><span>⊤ equivalent - the oracle accepts. You have recovered the hidden DFA.</span>';
-    } else {
-      eqVerdict.className='verdict reject';
-      eqVerdict.innerHTML='<span class="ic">✗</span><span>counterexample: <span class="eqword">'+c.word+'</span> - '+c.why+'.</span>';
+
+  function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
+  function prettyWord(w){ return w === '' ? 'ε' : escapeHtml(w); }
+  function hiddenAccepts(w){ return /^a[ab]*b$/.test(w); }
+  function validWord(raw){ return raw === 'ε' || /^[ab]*$/.test(raw); }
+  function normalizeWord(raw){ raw = (raw || '').trim(); return raw === 'ε' ? '' : raw; }
+
+  var mqHistory = [];
+  var ceHistory = [];
+  var mqRows = document.getElementById('tryMqRows');
+  var ceList = document.getElementById('tryCeList');
+  var mqVerdict = document.getElementById('tryMqVerdict');
+  var eqVerdict = document.getElementById('tryEqVerdict');
+
+  function renderMqHistory(){
+    if(!mqRows) return;
+    if(mqHistory.length === 0){
+      mqRows.innerHTML = '<tr><td colspan="3" class="empty-note">No membership queries yet.</td></tr>';
+      return;
     }
-  });
+    mqRows.innerHTML = mqHistory.map(function(item, i){
+      return '<tr><td>'+(i+1)+'</td><td>'+prettyWord(item.word)+'</td><td><span class="badge '+(item.answer?'ok':'no')+'">'+(item.answer?'accept':'reject')+'</span></td></tr>';
+    }).join('');
+  }
+  function renderCeHistory(){
+    if(!ceList) return;
+    if(ceHistory.length === 0){ ceList.innerHTML = '<div class="empty-note">No proposed hypotheses yet.</div>'; return; }
+    ceList.innerHTML = ceHistory.map(function(item, i){
+      return '<div class="ce-item">'
+        +(i+1)+'. Proposed regex: <code>'+escapeHtml(item.regex)+'</code> | counterexample: <span class="eqword">'+prettyWord(item.word)+'</span>'
+        +'</div>';
+    }).join('');
+  }
+
+  var mqBtn = document.getElementById('tryMqBtn');
+  var mqInput = document.getElementById('tryMqInput');
+  var resetBtn = document.getElementById('tryResetBtn');
+  if(mqBtn){ mqBtn.addEventListener('click', function(){
+    var raw = (mqInput.value || '').trim();
+    if(!validWord(raw)){ mqVerdict.className='verdict reject'; mqVerdict.textContent='Please use only a, b, or ε for the empty word.'; return; }
+    var w = normalizeWord(raw);
+    var ans = hiddenAccepts(w);
+    mqHistory.push({word:w, answer:ans});
+    renderMqHistory();
+    mqVerdict.className = 'verdict '+(ans?'accept':'reject');
+    mqVerdict.innerHTML = '<span class="ic">'+(ans?'✓':'✗')+'</span> '+prettyWord(w)+' is '+(ans?'accepted':'rejected')+' by the hidden DFA.';
+    mqInput.value = '';
+    mqInput.focus();
+  });}
+  if(mqInput){ mqInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') mqBtn.click(); }); }
+  if(resetBtn){ resetBtn.addEventListener('click', function(){
+    mqHistory = []; ceHistory = [];
+    renderMqHistory(); renderCeHistory();
+    mqVerdict.className='verdict'; mqVerdict.textContent='Ask a membership query to start collecting examples.';
+    eqVerdict.className='verdict'; eqVerdict.textContent='Submit a hypothesis when you think you know the language.';
+    var sol = document.getElementById('trySolution');
+    if(sol) sol.style.display = 'none';
+  });}
+
+  function Automaton(states, alphabet, start, finals, trans){
+    this.states = states.slice(); this.alphabet = alphabet.slice(); this.start = start;
+    this.finals = new Set(finals); this.trans = trans;
+  }
+  Automaton.prototype.step = function(q, a){ return (this.trans[q] && this.trans[q][a]) || '__sink__'; };
+  Automaton.prototype.accepts = function(w){
+    var q = this.start;
+    for(var i=0;i<w.length;i++) q = this.step(q, w[i]);
+    return this.finals.has(q);
+  };
+  Automaton.prototype.minimize = function(){
+    var alphabet = this.alphabet, self = this;
+    var reachable = new Set([this.start]), stack=[this.start];
+    while(stack.length){
+      var q = stack.pop();
+      alphabet.forEach(function(a){ var n = self.step(q,a); if(!reachable.has(n)){ reachable.add(n); stack.push(n); } });
+    }
+    var states = Array.from(reachable);
+    var marked = {};
+    function key(a,b){ return a < b ? a+'|'+b : b+'|'+a; }
+    for(var i=0;i<states.length;i++) for(var j=0;j<i;j++){
+      if(this.finals.has(states[i]) !== this.finals.has(states[j])) marked[key(states[i],states[j])] = true;
+    }
+    var changed = true;
+    while(changed){
+      changed = false;
+      for(var x=0;x<states.length;x++) for(var y=0;y<x;y++){
+        var k = key(states[x], states[y]); if(marked[k]) continue;
+        for(var ai=0; ai<alphabet.length; ai++){
+          var p = this.step(states[x], alphabet[ai]), r = this.step(states[y], alphabet[ai]);
+          if(p !== r && marked[key(p,r)]){ marked[k]=true; changed=true; break; }
+        }
+      }
+    }
+    var parent = {}; states.forEach(function(q){ parent[q]=q; });
+    function find(q){ while(parent[q]!==q){ parent[q]=parent[parent[q]]; q=parent[q]; } return q; }
+    function union(a,b){ a=find(a); b=find(b); if(a!==b) parent[b]=a; }
+    for(var m=0;m<states.length;m++) for(var n=0;n<m;n++) if(!marked[key(states[m],states[n])]) union(states[m],states[n]);
+    var reps = {}, newStates = [];
+    states.forEach(function(q){ var r=find(q); if(!reps[r]){ reps[r]='m'+newStates.length; newStates.push(reps[r]); } });
+    var newTrans = {}, newFinals=[];
+    states.forEach(function(q){
+      var nq = reps[find(q)]; if(!newTrans[nq]) newTrans[nq] = {};
+      if(self.finals.has(q) && newFinals.indexOf(nq)<0) newFinals.push(nq);
+      alphabet.forEach(function(a){ newTrans[nq][a] = reps[find(self.step(q,a))]; });
+    });
+    return new Automaton(newStates, alphabet, reps[find(this.start)], newFinals, newTrans);
+  };
+
+  function hiddenDfa(){
+    return new Automaton(['q0','q1','q2','q3'], ['a','b'], 'q0', ['q2'], {
+      q0:{a:'q1', b:'q3'}, q1:{a:'q1', b:'q2'}, q2:{a:'q1', b:'q2'}, q3:{a:'q3', b:'q3'}
+    }).minimize();
+  }
+
+  function RegexParser(input){
+    this.s = input.replace(/\s+/g,'').replace(/∪/g,'|').replace(/ε/g,'e'); this.i = 0; this.id = 0;
+    if(this.s === '') throw new Error('Empty regex.');
+  }
+  RegexParser.prototype.peek = function(){ return this.s[this.i]; };
+  RegexParser.prototype.eat = function(c){ if(this.s[this.i] === c){ this.i++; return true; } return false; };
+  RegexParser.prototype.node = function(type, left, right){ return {type:type, left:left, right:right}; };
+  RegexParser.prototype.parse = function(){ var r=this.parseUnion(); if(this.i !== this.s.length) throw new Error('Unexpected symbol near '+this.s.slice(this.i)+'.'); return r; };
+  RegexParser.prototype.parseUnion = function(){ var left=this.parseConcat(); while(this.eat('|')) left=this.node('union', left, this.parseConcat()); return left; };
+  RegexParser.prototype.parseConcat = function(){
+    var parts=[];
+    while(this.i < this.s.length && this.peek() !== ')' && this.peek() !== '|') parts.push(this.parseStar());
+    if(parts.length===0) return this.node('eps');
+    return parts.reduce(function(a,b){ return {type:'concat', left:a, right:b}; });
+  };
+  RegexParser.prototype.parseStar = function(){ var n=this.parseAtom(); while(this.peek() === '*' || this.peek() === '+'){ if(this.eat('*')) n=this.node('star', n); else if(this.eat('+')) n=this.node('plus', n); } return n; };
+  RegexParser.prototype.parseAtom = function(){
+    var c=this.peek();
+    if(c === '('){ this.i++; var n=this.parseUnion(); if(!this.eat(')')) throw new Error('Missing closing parenthesis.'); return n; }
+    if(c === 'a' || c === 'b'){ this.i++; return this.node('lit', c); }
+    if(c === 'e'){ this.i++; return this.node('eps'); }
+    throw new Error('Only a, b, |, *, +, parentheses, and ε are supported.');
+  };
+
+  function astToNfa(ast){
+    var id = 0;
+    function state(){ return 'n'+(id++); }
+    function build(n){
+      if(n.type === 'lit'){
+        var s=state(), f=state(); return {start:s, final:f, trans:[[s,n.left,f]], states:[s,f]};
+      }
+      if(n.type === 'eps'){
+        var es=state(), ef=state(); return {start:es, final:ef, trans:[[es,'',ef]], states:[es,ef]};
+      }
+      if(n.type === 'concat'){
+        var a=build(n.left), b=build(n.right); return {start:a.start, final:b.final, trans:a.trans.concat(b.trans, [[a.final,'',b.start]]), states:a.states.concat(b.states)};
+      }
+      if(n.type === 'union'){
+        var u1=build(n.left), u2=build(n.right), us=state(), uf=state();
+        return {start:us, final:uf, trans:[[us,'',u1.start],[us,'',u2.start]].concat(u1.trans,u2.trans,[[u1.final,'',uf],[u2.final,'',uf]]), states:[us,uf].concat(u1.states,u2.states)};
+      }
+      if(n.type === 'star'){
+        var x=build(n.left), ss=state(), sf=state();
+        return {start:ss, final:sf, trans:[[ss,'',x.start],[ss,'',sf],[x.final,'',x.start],[x.final,'',sf]].concat(x.trans), states:[ss,sf].concat(x.states)};
+      }
+      if(n.type === 'plus'){
+        var first=build(n.left), again=build({type:'star', left:n.left});
+        return {start:first.start, final:again.final, trans:first.trans.concat(again.trans, [[first.final,'',again.start]]), states:first.states.concat(again.states)};
+      }
+    }
+    return build(ast);
+  }
+  function nfaToDfa(nfa){
+    var alphabet=['a','b'], eps={};
+    nfa.trans.forEach(function(t){ if(t[1]===''){ if(!eps[t[0]]) eps[t[0]]=[]; eps[t[0]].push(t[2]); } });
+    function closure(set){ var out=new Set(set), st=Array.from(set); while(st.length){ var q=st.pop(); (eps[q]||[]).forEach(function(n){ if(!out.has(n)){ out.add(n); st.push(n); } }); } return out; }
+    function move(set,a){ var out=new Set(); nfa.trans.forEach(function(t){ if(t[1]===a && set.has(t[0])) out.add(t[2]); }); return out; }
+    function name(set){ return Array.from(set).sort().join(',') || '∅'; }
+    var start=closure(new Set([nfa.start])), startName=name(start), qsets={}, queue=[start], states=[startName], trans={}, finals=[];
+    qsets[startName]=start;
+    while(queue.length){
+      var cur=queue.shift(), cn=name(cur); trans[cn]={};
+      if(cur.has(nfa.final) && finals.indexOf(cn)<0) finals.push(cn);
+      alphabet.forEach(function(a){
+        var nxt=closure(move(cur,a)), nn=name(nxt); trans[cn][a]=nn;
+        if(!qsets[nn]){ qsets[nn]=nxt; states.push(nn); queue.push(nxt); }
+      });
+    }
+    return new Automaton(states, alphabet, startName, finals, trans).minimize();
+  }
+  function regexToMinDfa(raw){ var ast = new RegexParser(raw).parse(); return nfaToDfa(astToNfa(ast)); }
+  function counterexample(a,b){
+    var queue=[''], seen=new Set(['']);
+    while(queue.length){
+      var w=queue.shift(); if(a.accepts(w)!==b.accepts(w)) return w;
+      ['a','b'].forEach(function(ch){ var n=w+ch; if(n.length<=12 && !seen.has(n)){ seen.add(n); queue.push(n); } });
+    }
+    return null;
+  }
+
+  var eqBtn = document.getElementById('tryEqBtn');
+  var eqInput = document.getElementById('tryEqInput');
+  if(eqBtn){ eqBtn.addEventListener('click', function(){
+    try{
+      var proposedRegex = (eqInput.value || '').trim();
+      var hyp = regexToMinDfa(proposedRegex);
+      var target = hiddenDfa();
+      var ce = counterexample(target, hyp);
+      if(ce === null){
+        eqVerdict.className='verdict accept';
+        eqVerdict.innerHTML='<span class="ic">✓</span> Success! Congratulations, you discovered the hidden DFA.';
+      } else {
+        var item = {regex: proposedRegex, word:ce, target:target.accepts(ce), hyp:hyp.accepts(ce)};
+        ceHistory.push(item); renderCeHistory();
+        eqVerdict.className='verdict reject';
+        eqVerdict.innerHTML='<span class="ic">✗</span>';
+      }
+    } catch(err){
+      eqVerdict.className='verdict reject'; eqVerdict.textContent='Regex error: '+err.message;
+    }
+  });}
+  if(eqInput){ eqInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') eqBtn.click(); }); }
+
+  var revealBtn = document.getElementById('tryRevealBtn');
+  var solutionBox = document.getElementById('trySolution');
+  if(revealBtn && solutionBox){
+    revealBtn.addEventListener('click', function(){
+      solutionBox.style.display = 'flex';
+    });
+  }
 
   // autoplay the hero demo video, pause it when it scrolls out of view
   if(vid){
