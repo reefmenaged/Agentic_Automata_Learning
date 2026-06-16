@@ -759,22 +759,51 @@
   });}
 
   /* ---- tabs + try-it-yourself hidden DFA challenge ---- */
-  var tabs = document.querySelectorAll('.machine .tab');
+  var tabs = document.querySelectorAll('#machine .tab');
   var panes = {
     'pane-diagram': document.getElementById('pane-diagram'),
     'pane-try': document.getElementById('pane-try')
   };
+
+  function openPane(target){
+    tabs.forEach(function(x){
+      var on = x.getAttribute('data-pane') === target;
+      x.classList.toggle('active', on);
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    Object.keys(panes).forEach(function(k){
+      if(panes[k]) panes[k].classList.toggle('active', k === target);
+    });
+  }
+
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
-      var target = t.getAttribute('data-pane');
-      tabs.forEach(function(x){
-        var on = x.getAttribute('data-pane') === target;
-        x.classList.toggle('active', on);
-        x.setAttribute('aria-selected', on ? 'true' : 'false');
-      });
-      Object.keys(panes).forEach(function(k){ panes[k].classList.toggle('active', k === target); });
+      openPane(t.getAttribute('data-pane'));
     });
   });
+
+  function openTryFromUrl(){
+    var params = new URLSearchParams(window.location.search);
+    var shouldOpenTry = window.location.hash === '#try' || params.get('tab') === 'try';
+
+    if(shouldOpenTry){
+      openPane('pane-try');
+
+      setTimeout(function(){
+        var machine = document.getElementById('machine');
+        if(machine){
+          machine.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 250);
+    }
+  }
+
+  openTryFromUrl();
+  window.addEventListener('hashchange', openTryFromUrl);
 
   function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
   function prettyWord(w){ return w === '' ? 'ε' : escapeHtml(w); }
@@ -1014,12 +1043,6 @@
     vio.observe(vid);
   }
 })();
-  if (window.location.hash === "#try") {
-      document.querySelector('[data-pane="pane-try"]')?.click();
-    
-      document.getElementById("machine")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }
 </script>
 </body>
 </html>
