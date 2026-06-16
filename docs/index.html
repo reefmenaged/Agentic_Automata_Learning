@@ -1014,6 +1014,12 @@
     vio.observe(vid);
   }
 })();
+  if (window.location.hash === "#try") {
+      document.querySelector('[data-pane="pane-try"]')?.click();
+    
+      document.getElementById("machine")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
 </script>
 </body>
 </html>
