@@ -466,6 +466,7 @@
     <div class="figure reveal">
       <div class="sec-eyebrow" style="max-width:var(--maxw);margin:0 auto 14px">The setup</div>
       <h2 style="max-width:var(--maxw);margin:0 auto 22px">Try it yourself! Can you discover a hidden DFA through two kinds of questions?</h2>
+      <span id="try" style="display:block;position:relative;top:-76px;visibility:hidden"></span>
       <div class="machine" id="machine">
         <div class="tabs" role="tablist" aria-label="Automata explorer">
           <button class="tab active" role="tab" aria-selected="true" data-pane="pane-diagram">Diagram</button>
@@ -783,26 +784,38 @@
     });
   });
 
-  function openTryFromUrl(){
+  function shouldOpenTryPane(){
     var params = new URLSearchParams(window.location.search);
-    var shouldOpenTry = window.location.hash === '#try' || params.get('tab') === 'try';
-
-    if(shouldOpenTry){
-      openPane('pane-try');
-
-      setTimeout(function(){
-        var machine = document.getElementById('machine');
-        if(machine){
-          machine.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      }, 250);
-    }
+    return window.location.hash === '#try' || params.get('tab') === 'try';
   }
 
-  openTryFromUrl();
+  function scrollToTryPane(){
+    var machine = document.getElementById('machine');
+    if(!machine) return;
+
+    var topOffset = 74; // sticky top bar height + small gap
+    var y = machine.getBoundingClientRect().top + window.pageYOffset - topOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  function openTryFromUrl(){
+    if(!shouldOpenTryPane()) return;
+
+    openPane('pane-try');
+
+    // Run more than once because GitHub Pages, fonts, images, and the browser's native
+    // hash scrolling can all slightly change the final scroll position after load.
+    setTimeout(scrollToTryPane, 0);
+    setTimeout(scrollToTryPane, 300);
+    setTimeout(scrollToTryPane, 900);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', openTryFromUrl);
+  } else {
+    openTryFromUrl();
+  }
+  window.addEventListener('load', openTryFromUrl);
   window.addEventListener('hashchange', openTryFromUrl);
 
   function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
